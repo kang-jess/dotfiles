@@ -1,0 +1,29 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* Set font for tabs' text */
+.tabbrowser-tab  .tab-text
+    {
+      font-size: 9pt !important;
+      font-family: Arial !important; }
+/* change the tab toolbar height */
+#tabbrowser-tabs {
+  --tab-min-height: 18px !important;
+  margin-left: 0px !important;
+  height: 24px !important;
+}
+
+.tabbrowser-tab[fadein]:not([pinned]) {
+max-width: 150px !important;
+min-width: 50px !important;
+}
+
+/* #urlbar {
+min-height: 20px !important;
+        } */
+
+#urlbar {
+	 font-size: 9pt !important;
+         font-family: Arial !important;}
+
+
+
