@@ -4,7 +4,9 @@
 .tabbrowser-tab  .tab-text
     {
       font-size: 9pt !important;
+      font-color: #818f94 !important;
       font-family: Arial !important; }
+
 /* change the tab toolbar height */
 #tabbrowser-tabs {
   --tab-min-height: 18px !important;
@@ -17,13 +19,47 @@ max-width: 150px !important;
 min-width: 50px !important;
 }
 
+/* Change Color of all tabs */  
+.tab-background {
+    background-attachment: none!important;
+    background-color: #073642!important;
+    background-image: none!important;
+}
+
+/* Change Color of selected tab */  
+.tab-background[selected="true"] {
+    background-attachment: none!important;
+    background-color: #002b36!important;
+    background-image: none!important;
+}
+
+/*Change color of selected tab text*/
+#TabsToolbar .tabbrowser-tab[selected="true"] {
+    color: #a3ab6d !important;
+    font-weight: normal !important;
+}
+
+#TabsToolbar .tabbrowser-tab .tab-line {
+    display: none !important;
+    }
+
 /* #urlbar {
 min-height: 20px !important;
         } */
 
 #urlbar {
 	 font-size: 9pt !important;
-         font-family: Arial !important;}
+         font-family: Arial !important;
+ 	 border: none !important;
+}
 
+#nav-bar {
+	background: #073642 !important;
+}
 
-
+/* fonts */
+#urlbar, #TabsToolbar .tabbrowser-tab, #urlbar-results, menu, .autocomplete-richlistbox, #menubar-items, statuspanel[type="overLink"] .statuspanel-label, toolbarbutton, #placeContent, #placesList, .editBMPanel_rowLabel, .textbox-input-box, .viewer-title.label.toolbar, .downloadTarget, .downloadDetails, #bookmarks-view-children, #sidebar-search-label, #sidebar-title, .menubar-text {
+    font-family: "Arial" !important;
+    font-size: 9pt !important;
+    font-weight: normal !important;
+}
