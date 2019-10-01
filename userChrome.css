@@ -1,7 +1,9 @@
+/*
 ::-moz-selection {
-background-color: #4c5959 !important;
-color: #939596 !important;
+background-color: #4d6770 !important;
+color: #d1cfcf !important;
 }
+*/
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 /* Set font for tabs' text */
@@ -26,20 +28,20 @@ min-width: 50px !important;
 /* Change Color of all tabs */  
 .tab-background {
     background-attachment: none!important;
-    background-color: #073642!important;
+    background-color: #e3e3e3!important;
     background-image: none!important;
 }
 
 /* Change Color of selected tab */  
 .tab-background[selected="true"] {
     background-attachment: none!important;
-    background-color: #002b36!important;
+    background-color: #bfbfbf!important;
     background-image: none!important;
 }
 
 /*Change color of selected tab text*/
 #TabsToolbar .tabbrowser-tab[selected="true"] {
-    color: #a3ab6d !important;
+    color: #000000 !important;
     font-weight: normal !important;
 }
 
@@ -58,7 +60,7 @@ min-height: 20px !important;
 }
 
 #nav-bar {
-	background: #073642 !important;
+	background: #d6d6d6 !important;
 }
 
 /* fonts */
