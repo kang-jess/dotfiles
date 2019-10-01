@@ -1,3 +1,7 @@
+::-moz-selection {
+background-color: #4c5959 !important;
+color: #939596 !important;
+}
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 /* Set font for tabs' text */
