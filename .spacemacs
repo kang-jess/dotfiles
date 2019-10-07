@@ -75,7 +75,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
                                       solarized-theme
-                                      ;; gruvbox-theme
+                                      gruvbox-theme
                                       ob-ipython
                                       cdlatex
                                       org-ref
@@ -219,9 +219,9 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         solarized-dark
+                         gruvbox-light-medium
+                         ;; solarized-dark
                          ;; solarized-light
-                         ;; gruvbox-light-hard
                          )
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -486,7 +486,7 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (setq theming-modifications
-        '((solarized-dark
+        '((gruvbox-light-medium
            (org-level-1 :height 1.0)
            (org-level-2 :height 1.0)
            (org-level-3 :height 1.0)
@@ -565,7 +565,7 @@ before packages are loaded."
   ;; Fontify code in source code blocks
   (setq org-src-fontify-natively t)
   (setq org-todo-keywords
-        '((sequence "TODO" "REVIEW" "|" "DONE")))
+        '((sequence "TODO(t)" "REVIEW(r)" "|" "DONE(d)")))
   (setq org-image-actual-width nil)
   (setq org-todo-keyword-faces
         '(("TODO" . "DeepPink")
