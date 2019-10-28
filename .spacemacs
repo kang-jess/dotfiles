@@ -47,7 +47,7 @@ This function should only modify configuration layer settings."
      ;; markdown
      multiple-cursors
      bibtex
-     latex
+     (latex :variables latex-build-command "LaTeX")
      pdf
      (shell :variables
             shell-default-height 30
@@ -75,7 +75,12 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
                                       solarized-theme
-                                      gruvbox-theme
+                                      ;; color-theme-sanityinc-solarized
+                                      ;; color-theme-sanityinc-tomorrow
+                                      doom-themes
+                                      ;; one-themes
+                                      ;; zenburn-theme
+                                      ;; gruvbox-theme
                                       ob-ipython
                                       cdlatex
                                       org-ref
@@ -219,9 +224,12 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         gruvbox-light-medium
+                         doom-solarized-dark
                          ;; solarized-dark
+                         ;; sanityinc-solarized-dark
+                         ;; zenburn
                          ;; solarized-light
+                         ;; gruvbox-light-medium
                          )
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -231,7 +239,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(spacemacs :separator nil :separator-scale 0.5)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -332,7 +340,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup t
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
@@ -485,23 +493,25 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  (setq theming-modifications
-        '((gruvbox-light-medium
-           (org-level-1 :height 1.0)
-           (org-level-2 :height 1.0)
-           (org-level-3 :height 1.0)
-           (org-level-4 :height 1.0)
-           (org-level-5 :height 1.0))))
-  )
+   (setq theming-modifications
+         '((doom-solarized-dark
+            (org-level-1 :height 1.0)
+            (org-level-2 :height 1.0)
+            (org-level-3 :height 1.0)
+            (org-level-4 :height 1.0)
+          (org-level-5 :height 1.0))))
+   )
 
-;; (defun my/org-mode-hook()
-;;  (dolist(face'(org-level-1
-;;                org-level-2
-;;                org-level-3
-;;                org-level-4
-;;                org-level-5))
-;;    (set-face-attribute face nil :weight 'semi-light :height 1.0)))
-(add-hook 'org-mode-hook 'my/org-mode-hook)
+ ;; (defun my/org-mode-hook()
+ ;;  (dolist(face'(org-level-1
+ ;;                org-level-2
+ ;;                org-level-3
+ ;;                org-level-4
+ ;;                org-level-5))
+ ;;    (set-face-attribute face nil :weight 'semi-light :height 1.0)))
+
+
+ ;; (add-hook 'org-mode-hook 'my/org-mode-hook)
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
@@ -517,33 +527,54 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+  ;; -----------------------------------------------------------------------------
+  ;; GENERAL
+  ;; -----------------------------------------------------------------------------
+
   ;; BINDINGS
-  (define-key global-map (kbd "C-=") 'text-scale-increase)
-  (define-key global-map (kbd "C--") 'text-scale-decrease)
+   (define-key global-map (kbd "C-=") 'text-scale-increase)
+   (define-key global-map (kbd "C--") 'text-scale-decrease)
 
-  ;; SPACELINE
-  (spaceline-toggle-purpose-off)
-  (spaceline-toggle-buffer-size-off)
-  (spaceline-toggle-buffer-encoding-abbrev-off)
-  (spaceline-toggle-buffer-position-off)
-  (spaceline-toggle-hud-off)
-  (spaceline-toggle-line-column-off)
-  (spaceline-toggle-process-off)
-  (spaceline-toggle-workspace-number-on)
-  (fancy-battery-mode)
-  (setq display-time-format "%H:%M | %a %d/%m/%y")
-  (setq display-time-default-average nil)
-  (spacemacs/toggle-display-time-on)
-  (setq powerline-default-separator 'nil)
+  ;; Highlighted yank etc
+   (evil-goggles-mode)
+  ;; Highlight time
+   (setq evil-goggles-duration 0.200)
 
+  ;; ;; SPACELINE
+    (spaceline-toggle-purpose-off)
+    (spaceline-toggle-buffer-size-off)
+    (spaceline-toggle-buffer-encoding-abbrev-off)
+    (spaceline-toggle-buffer-position-off)
+    (spaceline-toggle-hud-off)
+    (spaceline-toggle-line-column-off)
+    (spaceline-toggle-process-off)
+    (spaceline-toggle-workspace-number-on)
+   (fancy-battery-mode)
+   (setq display-time-format "%H:%M | %a %d/%m/%y")
+   (setq display-time-default-average nil)
+   (spacemacs/toggle-display-time-on)
+   (setq powerline-default-separator 'nil)
+
+  ;; -----------------------------------------------------------------------------
+  ;; LATEX
+  ;; -----------------------------------------------------------------------------
   ;; Some latex stuff told I needed pdftools
-  (add-hook 'Tex-after-compilation-finished-functions #'Tex-revert-document-buffer)
+   (add-hook 'Tex-after-compilation-finished-functions #'Tex-revert-document-buffer)
+   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+   (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+         TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+         TeX-source-correlate-start-server t)
 
+   ;; (latex-preview-pane-enable)
+
+  ;; -----------------------------------------------------------------------------
+  ;; ORG
+  ;; -----------------------------------------------------------------------------
   ;; ORG MODE - basic
   ;; Location of org directory
   (setq org-directory "~/Documents/org")
   ;; Location of agenda files
-  (setq org-agenda-files (list org-directory))
+  (setq org-agenda-files (list "~/Documents/org/notes.org"))
   ;; Where to capture by default
   (setq org-default-notes-file "~/Documents/org/notes.org")
   ;; Open agenda in current window
@@ -568,8 +599,8 @@ before packages are loaded."
         '((sequence "TODO(t)" "REVIEW(r)" "|" "DONE(d)")))
   (setq org-image-actual-width nil)
   (setq org-todo-keyword-faces
-        '(("TODO" . "DeepPink")
-          ("REVIEW" . "OrangeRed")))
+        '(("TODO" . "LightSalmon")
+          ("REVIEW" . "Tan")))
   (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
   ;; Insert link from clipboard
@@ -612,5 +643,26 @@ before packages are loaded."
         (lambda (fpath)
           (start-process "open" "*open*" "open" fpath)))
   )
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (latex-preview-pane yasnippet-snippets yapfify xterm-color ws-butler writeroom-mode which-key vterm volatile-highlights uuidgen use-package unfill treemacs-projectile treemacs-magit treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons solarized-theme smeargle shell-pop restart-emacs ranger pytest pyenv-mode py-isort popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-ref org-present org-pomodoro org-mime org-download org-cliplink org-brain open-junk-file ob-ipython nameless mwim multi-term move-text magit-svn magit-gitflow macrostep live-py-mode link-hint indent-guide importmagic hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl devdocs define-word cython-mode company-statistics company-reftex company-auctex company-anaconda column-enforce-mode clean-aindent-mode centered-cursor-mode cdlatex browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
