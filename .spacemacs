@@ -224,7 +224,7 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         doom-solarized-dark
+                         doom-solarized-light
                          ;; solarized-dark
                          ;; sanityinc-solarized-dark
                          ;; zenburn
@@ -494,7 +494,7 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
    (setq theming-modifications
-         '((doom-solarized-dark
+         '((doom-solarized-light
             (org-level-1 :height 1.0)
             (org-level-2 :height 1.0)
             (org-level-3 :height 1.0)
@@ -599,8 +599,9 @@ before packages are loaded."
         '((sequence "TODO(t)" "REVIEW(r)" "|" "DONE(d)")))
   (setq org-image-actual-width nil)
   (setq org-todo-keyword-faces
-        '(("TODO" . "LightSalmon")
-          ("REVIEW" . "Tan")))
+        '(("TODO" . "IndianRed")
+          ("DONE" . "DimGray")
+          ("REVIEW" . "Peru")))
   (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
   ;; Insert link from clipboard
